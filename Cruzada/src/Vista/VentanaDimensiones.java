@@ -1,6 +1,8 @@
 
 package Vista;
 
+import Controlador.Controlador;
+
 import Modelo.Grilla;
 
 import javax.swing.JFrame;
@@ -9,10 +11,8 @@ import javax.swing.JFrame;
  *
  * @author martin
  */
-public class VentanaDimensiones extends javax.swing.JFrame
-{
-    private JFrame siguiente;
-    
+public class VentanaDimensiones extends javax.swing.JFrame implements InterfaceDimensiones
+{    
     /** Creates new form VentanaDimensiones */
     public VentanaDimensiones()
     {
@@ -128,81 +128,12 @@ public class VentanaDimensiones extends javax.swing.JFrame
     private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonAceptarActionPerformed
     {//GEN-HEADEREND:event_jButtonAceptarActionPerformed
         // TODO add your handling code here:
-        int alto= Integer.parseInt(jTextFieldAlto.getText()); 
-        int ancho = Integer.parseInt(jTextFieldAncho.getText());    
-        this.setVisible(false);
     }//GEN-LAST:event_jButtonAceptarActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[])
-    {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing
-                                                                   .UIManager
-                                                                   .getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing
-                         .UIManager
-                         .setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util
-                .logging
-                .Logger
-                .getLogger(VentanaDimensiones.class.getName())
-                .log(java.util
-                         .logging
-                         .Level
-                         .SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util
-                .logging
-                .Logger
-                .getLogger(VentanaDimensiones.class.getName())
-                .log(java.util
-                         .logging
-                         .Level
-                         .SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util
-                .logging
-                .Logger
-                .getLogger(VentanaDimensiones.class.getName())
-                .log(java.util
-                         .logging
-                         .Level
-                         .SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util
-                .logging
-                .Logger
-                .getLogger(VentanaDimensiones.class.getName())
-                .log(java.util
-                         .logging
-                         .Level
-                         .SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt
-            .EventQueue
-            .invokeLater(new Runnable() {
-                public void run()
-                {
-                    new VentanaDimensiones().setVisible(true);
-                }
-            });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAceptar;
@@ -215,4 +146,24 @@ public class VentanaDimensiones extends javax.swing.JFrame
     private javax.swing.JTextField jTextFieldAncho;
     // End of variables declaration//GEN-END:variables
 
+    @Override
+    public void setControlador(Controlador controlador) {
+        this.jButtonAceptar.addActionListener(controlador);
+        this.jButtonAceptar.setActionCommand(InterfaceDimensiones.ACEPTAR);
+    }
+
+    @Override
+    public String getAlto() {
+        return jTextFieldAlto.getText();
+    }
+
+    @Override
+    public String getAncho() {
+        return jTextFieldAncho.getText();
+    }
+
+    @Override
+    public void matar() {
+        this.dispose();
+    }
 }
