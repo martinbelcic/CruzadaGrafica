@@ -5,7 +5,7 @@ package Vista;
  *
  * @author martin
  */
-public class VentanaGratis extends javax.swing.JFrame
+public class VentanaGratis extends javax.swing.JFrame implements InterfaceGratis
 {
 
     /** Creates new form VentanaGratis */
