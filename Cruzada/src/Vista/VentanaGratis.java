@@ -3,17 +3,31 @@ package Vista;
 
 import Controlador.Controlador;
 
+import Modelo.Grilla;
+
+import java.awt.GridLayout;
+
+import java.util.ArrayList;
+
+import javax.swing.JTextField;
+
 /**
  *
  * @author martin
  */
 public class VentanaGratis extends javax.swing.JFrame implements InterfaceGratis
 {
-
+    private int alto, ancho;
+    private ArrayList<JTextField> lista = new ArrayList<JTextField>();
+    private Grilla grilla;
+    
     /** Creates new form VentanaGratis */
-    public VentanaGratis()
+    public VentanaGratis(int alto, int ancho, Grilla grilla)
     {
         initComponents();
+        this.alto = alto;
+        this.ancho = ancho;
+        this.grilla = grilla;
     }
 
     /** This method is called from within the constructor to
@@ -88,77 +102,6 @@ public class VentanaGratis extends javax.swing.JFrame implements InterfaceGratis
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonAceptarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[])
-    {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing
-                                                                   .UIManager
-                                                                   .getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing
-                         .UIManager
-                         .setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util
-                .logging
-                .Logger
-                .getLogger(VentanaGratis.class.getName())
-                .log(java.util
-                         .logging
-                         .Level
-                         .SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util
-                .logging
-                .Logger
-                .getLogger(VentanaGratis.class.getName())
-                .log(java.util
-                         .logging
-                         .Level
-                         .SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util
-                .logging
-                .Logger
-                .getLogger(VentanaGratis.class.getName())
-                .log(java.util
-                         .logging
-                         .Level
-                         .SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util
-                .logging
-                .Logger
-                .getLogger(VentanaGratis.class.getName())
-                .log(java.util
-                         .logging
-                         .Level
-                         .SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt
-            .EventQueue
-            .invokeLater(new Runnable() {
-                public void run()
-                {
-                    new VentanaGratis().setVisible(true);
-                }
-            });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAceptar;
     private javax.swing.JLabel jLabelTitulo;
@@ -174,11 +117,39 @@ public class VentanaGratis extends javax.swing.JFrame implements InterfaceGratis
 
     @Override
     public void arrancar() {
+        this.jPanelGrilla.setLayout(new GridLayout(alto, ancho));
+        this.setMatriz();
         this.setVisible(true);
     }
 
     @Override
     public void matar() {
         this.dispose();
+    }
+    
+    private void setMatriz()
+    {
+        for (int i = 0; i < this.alto; i++)
+        {
+            for (int j = 0; j < this.ancho; j++)
+            {
+                JTextField nuevo = new JTextField();
+                this.lista.add(nuevo);
+                this.jPanelGrilla.add(nuevo);
+                if(this.grilla.getCelda(i, j))
+                {
+                    nuevo.setEditable(true);
+                }else
+                {
+                    nuevo.setEditable(false);
+                }
+            }
+        }
+    }
+
+    @Override
+    public ArrayList<JTextField> getTextField()
+    {
+        return this.getTextField();
     }
 }
