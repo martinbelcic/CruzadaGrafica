@@ -1,6 +1,7 @@
 package Modelo;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Grilla
 {
@@ -56,6 +57,7 @@ public class Grilla
     public void buscaPalabras()
     {
         buscaPalabrasHorizontal();
+        buscaPalabrasVertical();
     }
     
     public void buscaPalabrasHorizontal(){
@@ -63,7 +65,7 @@ public class Grilla
             for(int j = 0; j < this.col; j++){
                 if(this.getCelda(i, j)){
                     int inicio = j, fin = j;
-                    while(this.getCelda(i, j)){
+                    while(j < this.col && this.getCelda(i, j)){
                         fin = j;
                         j++;
                     }
@@ -74,11 +76,11 @@ public class Grilla
     }
     
     public void buscaPalabrasVertical(){
-        for(int j = 0; j < this.filas; j++){
-            for(int i = 0; i < this.col; i++){
+        for(int j = 0; j < this.col; j++){
+            for(int i = 0; i < this.filas; i++){
                 if(this.getCelda(i, j)){
                     int inicio = i, fin = i;
-                    while(this.getCelda(i, j)){
+                    while(i < this.filas && this.getCelda(i, j)){
                         fin = i;
                         i++;
                     }
@@ -108,5 +110,72 @@ public class Grilla
         right = (j < this.col - 1) && this.getCelda(i, j+1); 
         //todas las condiciones de interseccion
         return respuesta && ((up && right) || (right && down) || (down && left) || (left && up));
+    }
+    
+    public String getPalabrasTamaño()
+    {
+        String respuesta = "";
+        Iterator it = this.lista.iterator();
+        int i = 1;
+        while(it.hasNext())
+        {
+            String actual = (String) it.next();
+            respuesta += "pos("+i+","+actual.length()+")";
+            i++;
+        }
+        return respuesta;
+    }
+    
+    public String getMiembros()
+    {
+        String respuesta = "";
+        String cabeza = "miembro(X,sol(";
+        for(int i = 1; i <= this.lista.size(); i++)
+        {
+            respuesta += cabeza;
+            respuesta += this.armaCabezaProlog(i, this.lista.size())+"):-\n";
+            respuesta += "X = palabra(Lista),\n";
+            respuesta += "pos("+i+",N),\n";
+            respuesta += "longitud(Lista,N).\n";
+            
+        }
+        return respuesta;
+    }
+    
+    public String getPosiciones()
+    {
+        String respuesta = "";
+        for(int i = 1; i <= this.lista.size(); i++)
+        {
+            String cabeza = "ubicacion"+i+"(X,sol(";
+            respuesta += cabeza;
+            respuesta += this.armaCabezaProlog(i, this.lista.size())+"):-\n";
+            respuesta += "X = palabra(Lista),\n";
+            respuesta += "pos("+i+",N),\n";
+            respuesta += "longitud(Lista,N).\n";
+            
+        }
+        return respuesta;
+    }
+    /* guiones y x*/
+    private String armaCabezaProlog(int posicion, int cantidad)
+    {
+        String respuesta = "";
+        for(int i = 1; i <= cantidad; i++)
+        {
+            if(i == posicion)
+            {
+                respuesta += "X";
+            }
+            else
+            {
+                respuesta += "_";
+            }
+            if(i < cantidad)
+            {
+                respuesta += ",";
+            }
+        }
+        return respuesta;
     }
 }

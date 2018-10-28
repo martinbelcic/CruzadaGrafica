@@ -1,11 +1,13 @@
 
 package Vista;
 
+import Controlador.Controlador;
+
 /**
  *
  * @author martin
  */
-public class VentanaSolucion extends javax.swing.JFrame
+public class VentanaSolucion extends javax.swing.JFrame implements InterfaceSolucion
 {
 
     /** Creates new form VentanaSolucion */
@@ -23,94 +25,94 @@ public class VentanaSolucion extends javax.swing.JFrame
     private void initComponents()//GEN-BEGIN:initComponents
     {
 
+        jPanel = new javax.swing.JPanel();
+        jButtonNuevo = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jPanelGrilla = new javax.swing.JPanel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jButtonNuevo.setText("Nuevo");
+
+        jLabel1.setText("Solucion");
+
+        javax.swing.GroupLayout jPanelGrillaLayout = new javax.swing.GroupLayout(jPanelGrilla);
+        jPanelGrilla.setLayout(jPanelGrillaLayout);
+        jPanelGrillaLayout.setHorizontalGroup(
+            jPanelGrillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanelGrillaLayout.setVerticalGroup(
+            jPanelGrillaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 303, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanelLayout = new javax.swing.GroupLayout(jPanel);
+        jPanel.setLayout(jPanelLayout);
+        jPanelLayout.setHorizontalGroup(
+            jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelLayout.createSequentialGroup()
+                .addGap(209, 209, 209)
+                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jButtonNuevo))
+                .addContainerGap(222, Short.MAX_VALUE))
+            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jPanelGrilla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanelLayout.setVerticalGroup(
+            jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanelGrilla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addComponent(jButtonNuevo)
+                .addGap(33, 33, 33))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[])
-    {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing
-                                                                   .UIManager
-                                                                   .getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing
-                         .UIManager
-                         .setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util
-                .logging
-                .Logger
-                .getLogger(VentanaSolucion.class.getName())
-                .log(java.util
-                         .logging
-                         .Level
-                         .SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util
-                .logging
-                .Logger
-                .getLogger(VentanaSolucion.class.getName())
-                .log(java.util
-                         .logging
-                         .Level
-                         .SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util
-                .logging
-                .Logger
-                .getLogger(VentanaSolucion.class.getName())
-                .log(java.util
-                         .logging
-                         .Level
-                         .SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util
-                .logging
-                .Logger
-                .getLogger(VentanaSolucion.class.getName())
-                .log(java.util
-                         .logging
-                         .Level
-                         .SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt
-            .EventQueue
-            .invokeLater(new Runnable() {
-                public void run()
-                {
-                    new VentanaSolucion().setVisible(true);
-                }
-            });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonNuevo;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel;
+    private javax.swing.JPanel jPanelGrilla;
+    private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
 
+    @Override
+    public void setControlador(Controlador controlador)
+    {
+        this.jButtonNuevo.addActionListener(controlador);
+        this.jButtonNuevo.setActionCommand(InterfaceSolucion.NUEVO);
+    }
+
+    @Override
+    public void matar()
+    {
+        this.dispose();
+    }
+
+    @Override
+    public void arrancar()
+    {
+        this.setVisible(true);
+    }
 }
