@@ -16,7 +16,15 @@ public class Grilla
         this.filas = filas;
         matriz = new boolean[filas][col];
     }
-    
+
+    public int getCol() {
+        return col;
+    }
+
+    public int getFilas() {
+        return filas;
+    }
+
     public void addPalabra(Palabra palabra)
     {
         this.palabras.add(palabra);
