@@ -5,6 +5,8 @@ import Controlador.Controlador;
 
 import java.awt.GridLayout;
 
+import java.util.ArrayList;
+
 import javax.swing.JCheckBox;
 
 /**
@@ -14,6 +16,7 @@ import javax.swing.JCheckBox;
 public class VentanaValidos extends javax.swing.JFrame implements InterfaceValidos
 {
     private int alto, ancho;
+    private ArrayList<JCheckBox> listaCheck = new ArrayList<JCheckBox>();
 
     /** Creates new form VentanaValidos */
     public VentanaValidos(int alto, int ancho)
@@ -35,6 +38,7 @@ public class VentanaValidos extends javax.swing.JFrame implements InterfaceValid
     private void initComponents() {//GEN-BEGIN:initComponents
 
         jComboBox1 = new javax.swing.JComboBox<>();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
         jPanel1 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabelTitulo = new javax.swing.JLabel();
@@ -42,6 +46,8 @@ public class VentanaValidos extends javax.swing.JFrame implements InterfaceValid
         jPanelMatriz = new javax.swing.JPanel();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jFormattedTextField1.setText("jFormattedTextField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -116,6 +122,7 @@ public class VentanaValidos extends javax.swing.JFrame implements InterfaceValid
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAceptar;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelMatriz;
@@ -131,13 +138,16 @@ public class VentanaValidos extends javax.swing.JFrame implements InterfaceValid
     public void setMatriz(){
         for (int i = 0; i < alto; i++){
             for (int j = 0; j < ancho; j++){
-                this.jPanelMatriz.add(new JCheckBox());
+                JCheckBox box = new JCheckBox();
+                this.jPanelMatriz.add(box);
+                this.listaCheck.add(box);
             }
         }
     }
 
     @Override
     public void arrancar() {
+        this.setSize(400, 400);
         this.setVisible(true);
     }
 
@@ -145,5 +155,10 @@ public class VentanaValidos extends javax.swing.JFrame implements InterfaceValid
     public void matar()
     {
         this.dispose();
+    }
+
+    @Override
+    public ArrayList<JCheckBox> getListaCheck() {
+        return this.listaCheck;
     }
 }
