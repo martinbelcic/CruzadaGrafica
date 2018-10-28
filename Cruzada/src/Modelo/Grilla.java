@@ -56,6 +56,7 @@ public class Grilla
     public void buscaPalabras()
     {
         buscaPalabrasHorizontal();
+        buscaPalabrasVertical();
     }
     
     public void buscaPalabrasHorizontal(){
@@ -63,7 +64,7 @@ public class Grilla
             for(int j = 0; j < this.col; j++){
                 if(this.getCelda(i, j)){
                     int inicio = j, fin = j;
-                    while(this.getCelda(i, j)){
+                    while(j < this.col && this.getCelda(i, j)){
                         fin = j;
                         j++;
                     }
@@ -74,11 +75,11 @@ public class Grilla
     }
     
     public void buscaPalabrasVertical(){
-        for(int j = 0; j < this.filas; j++){
-            for(int i = 0; i < this.col; i++){
+        for(int j = 0; j < this.col; j++){
+            for(int i = 0; i < this.filas; i++){
                 if(this.getCelda(i, j)){
                     int inicio = i, fin = i;
-                    while(this.getCelda(i, j)){
+                    while(i < this.filas && this.getCelda(i, j)){
                         fin = i;
                         i++;
                     }

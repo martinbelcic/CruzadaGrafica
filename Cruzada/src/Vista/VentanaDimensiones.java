@@ -130,11 +130,6 @@ public class VentanaDimensiones extends javax.swing.JFrame implements InterfaceD
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonAceptarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAceptar;
     private javax.swing.JLabel jLabelAlto;
@@ -165,5 +160,11 @@ public class VentanaDimensiones extends javax.swing.JFrame implements InterfaceD
     @Override
     public void matar() {
         this.dispose();
+    }
+
+    @Override
+    public void arrancar()
+    {
+        this.setVisible(true);
     }
 }
