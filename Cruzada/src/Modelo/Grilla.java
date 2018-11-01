@@ -115,12 +115,12 @@ public class Grilla
     public String getPalabrasTamaño()
     {
         String respuesta = "";
-        Iterator it = this.lista.iterator();
+        Iterator<Palabra> it = this.palabras.iterator();
         int i = 1;
         while(it.hasNext())
         {
-            String actual = (String) it.next();
-            respuesta += "pos("+i+","+actual.length()+")";
+            Palabra actual = it.next();
+            respuesta += "pos("+i+","+actual.getSize()+")";
             i++;
         }
         return respuesta;

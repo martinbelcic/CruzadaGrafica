@@ -69,7 +69,7 @@ public class Controlador implements ActionListener
         else if(e.getActionCommand().equalsIgnoreCase(InterfacePalabras.AGREGAR))
         {
             String palabra = palabras.getPalabra();
-            grilla.addPalabraLista(palabra);
+            grilla.addPalabraLista(palabra.toUpperCase());
             System.out.println("Palabra agregada Correctamente: "+palabra);
             palabras.limpiar();
         }
@@ -83,6 +83,7 @@ public class Controlador implements ActionListener
         {
             solucion = new VentanaSolucion();
             solucion.setControlador(this);
+            this.guadarGratis();
             gratis.matar();
             solucion.arrancar();
         }
@@ -109,6 +110,46 @@ public class Controlador implements ActionListener
             else {
                 j = 0;
                 i++;
+            }
+        }
+    }
+
+    @SuppressWarnings("oracle.jdeveloper.java.multiple-assignment")
+    private void guadarGratis() {
+        int i = 0, j = 0, ultimoI, ultimoJ, inicioI, inicioJ;
+        Iterator<JTextField> it = this.gratis.getTextField().iterator();
+        JTextField actual = it.next();
+        while(it.hasNext() && actual.getText().isEmpty()){
+            actual = it.next();
+            if(j < (this.grilla.getCol() - 1)){
+                j++;
+            }
+            else {
+                j = 0;
+                i++;
+            }
+        } 
+        if(!actual.getText().isEmpty()){
+            String palabra = actual.getText().toUpperCase().substring(0, 1);
+            inicioI = ultimoI = i;
+            inicioJ = ultimoJ = j;
+            while(it.hasNext()){
+                actual = it.next();
+                if(!actual.getText().isEmpty()){
+                    palabra += actual.getText().toUpperCase().substring(0, 1);
+                    ultimoI = i;
+                    ultimoJ = j;
+                }
+                if(j < (this.grilla.getCol() - 1)){
+                    j++;
+                }
+                else {
+                    j = 0;
+                    i++;
+                }
+            }
+            if(inicioI == ultimoI){
+                //buscar palabra y correspondiente y guardar el String
             }
         }
     }
