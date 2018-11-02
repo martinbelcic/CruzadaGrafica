@@ -30,4 +30,19 @@ public class Palabra
     public int getSize(){
         return this.size;
     }
+    
+    public boolean isTipo(String tipo){
+        return this.tipo.equals(tipo);
+    }
+    
+    public boolean esCelda(int i, int j){
+        boolean respuesta;
+        if(this.isTipo("horizontal")){
+            respuesta = (i == this.ubicacion && j == this.inicio);
+        }
+        else{
+            respuesta = (j == this.ubicacion && i == this.inicio);
+        }
+        return respuesta;
+    }
 }
