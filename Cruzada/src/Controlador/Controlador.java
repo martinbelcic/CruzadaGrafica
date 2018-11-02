@@ -2,6 +2,8 @@ package Controlador;
 
 import Modelo.Grilla;
 
+import Modelo.Palabra;
+
 import Vista.InterfaceDimensiones;
 import Vista.InterfaceGratis;
 import Vista.InterfacePalabras;
@@ -150,6 +152,12 @@ public class Controlador implements ActionListener
             }
             if(inicioI == ultimoI){
                 //buscar palabra y correspondiente y guardar el String
+                Palabra encontrada = grilla.buscaPalabra(i, j, "horizontal");
+                encontrada.setPalabra(palabra);
+            }
+            else if(inicioJ == ultimoJ){
+                Palabra encontrada = grilla.buscaPalabra(i, j, "vertical");
+                encontrada.setPalabra(palabra);
             }
         }
     }
