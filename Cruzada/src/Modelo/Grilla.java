@@ -112,20 +112,29 @@ public class Grilla
         return respuesta && ((up && right) || (right && down) || (down && left) || (left && up));
     }
     
+    /*
+     * Arma pos(1.4), base de datos ubicacion de la palabra y tamaño
+     */
     public String getPalabrasTamaño()
     {
         String respuesta = "";
-        Iterator it = this.lista.iterator();
+        Iterator<Palabra> it = this.palabras.iterator();
         int i = 1;
         while(it.hasNext())
         {
-            String actual = (String) it.next();
-            respuesta += "pos("+i+","+actual.length()+")";
+            Palabra actual = it.next();
+            respuesta += "pos("+i+","+actual.getSize()+")";
             i++;
         }
         return respuesta;
     }
     
+    /*
+     * Arma miembro(X,sol(X,_,_,_)):-
+                X = palabra(Lista),
+                pos(1,N),
+                longitud(Lista,N).
+     */
     public String getMiembros()
     {
         String respuesta = "";
@@ -142,6 +151,12 @@ public class Grilla
         return respuesta;
     }
     
+    /*
+     * Arma ubicacion1(X,sol(_,X,_,_)):-
+            X = palabra(Lista),
+            pos(2,N),
+            longitud(Lista,N).
+     */
     public String getPosiciones()
     {
         String respuesta = "";
@@ -157,7 +172,9 @@ public class Grilla
         }
         return respuesta;
     }
-    /* guiones y x*/
+    /*
+     * Arma _,_,_,X,_ 
+     */
     private String armaCabezaProlog(int posicion, int cantidad)
     {
         String respuesta = "";
@@ -177,5 +194,46 @@ public class Grilla
             }
         }
         return respuesta;
+    }
+    /*
+     * Arma prolog miembro(palabra([a,s,n,o]),C)
+     */
+    public String getPrologPalabras(){
+        String respuesta = "", actual;
+        Iterator<String> it = this.lista.iterator();
+        while(it.hasNext()){
+            actual = it.next();
+            respuesta += "miembro(palabra(["+this.armarListaString(actual)+"]),C),\n";
+        }
+        return respuesta;
+    }
+    
+    
+    /*
+     * Arma lista [a,s,n,o]
+     */
+    private String armarListaString(String palabra){
+        String respuesta = "";
+        for(int i = 0; i < palabra.length(); i++){
+            respuesta += palabra.charAt(i);
+            if(i < (palabra.length() - 1)){
+                respuesta += ",";
+            }
+        }
+        return respuesta;
+    }
+    
+    public Palabra buscaPalabra(int i, int j, String tipo){
+        Iterator<Palabra> it = this.palabras.iterator();
+        Palabra palabra, actual;
+        
+        while(it.hasNext()){
+            actual = it.next();
+            if(actual.isTipo(tipo) && actual.esCelda(i,j)){
+                palabra = actual;
+            }
+        }
+        
+        return palabra;
     }
 }
