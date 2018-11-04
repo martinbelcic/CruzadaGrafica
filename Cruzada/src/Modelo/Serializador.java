@@ -8,7 +8,7 @@ import java.io.IOException;
 public class Serializador
 {
     private Grilla grilla;
-    private String ruta = "./prolog.pl";
+    public static String ruta = "./prolog.pl";
     private File archivo;
     
     public Serializador(Grilla grilla)
@@ -24,7 +24,7 @@ public class Serializador
         }
     }
     
-    public void escribirArchivo(){
+    public void escribirArchivo() throws ErrorInterseccionException {
         try {
             FileWriter fw = new FileWriter(this.archivo);
             fw.write(this.armaEstaticos());
@@ -54,10 +54,12 @@ public class Serializador
         return respuesta;
     }
 
-    private String armaSolucion()
-    {
+    private String armaSolucion() throws ErrorInterseccionException {
         String retorno = "sol(C):-\n";
-        retorno += this.grilla.prologGratis();
+        try {
+            retorno += this.grilla.prologGratis();
+        } catch (NoHayGratisException e) {
+        }
         retorno += this.grilla.getPrologPalabras();
         retorno += this.grilla.armaPrologIntersecciones();
         return retorno;

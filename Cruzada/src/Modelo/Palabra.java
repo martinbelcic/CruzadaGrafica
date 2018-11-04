@@ -14,7 +14,7 @@ public class Palabra
         this.fin = fin;
         this.ubicacion = ubicacion;
         this.tipo = tipo;
-        this.size = fin - inicio;
+        this.size = fin - inicio + 1;
     }
 
     public int getInicio()
@@ -59,5 +59,9 @@ public class Palabra
     public boolean isDentro(int valor)
     {
         return (this.inicio <= valor) && (valor <= this.fin);
+    }
+    
+    public String toString(){
+        return this.inicio+" "+this.fin+" "+this.ubicacion+" "+this.size+" "+this.tipo+" "+this.palabra+"\n";
     }
 }

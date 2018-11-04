@@ -1,8 +1,12 @@
 package Controlador;
 
+import Modelo.ErrorInterseccionException;
 import Modelo.Grilla;
 
+import Modelo.NoExistePalabraException;
 import Modelo.Palabra;
+
+import Modelo.Serializador;
 
 import Vista.InterfaceDimensiones;
 import Vista.InterfaceGratis;
@@ -38,6 +42,7 @@ public class Controlador implements ActionListener
     private InterfaceGratis gratis;
     private InterfaceSolucion solucion;
     private Grilla grilla;
+    private Serializador serializador;
     
     public Controlador(InterfaceDimensiones dimensiones)
     {
@@ -53,6 +58,7 @@ public class Controlador implements ActionListener
             int ancho = Integer.parseInt(dimensiones.getAncho());
             validos = new VentanaValidos(alto, ancho);
             grilla = new Grilla(ancho, alto);
+            this.serializador = new Serializador(grilla);
             validos.setControlador(this);
             dimensiones.matar();
             validos.arrancar();            
@@ -65,6 +71,8 @@ public class Controlador implements ActionListener
             this.setMatriz(validos.getListaCheck());    
             grilla.buscaPalabras();
             grilla.buscaInterseccion();
+            grilla.imprimirPalabras();
+            grilla.imprimirIntersecciones();
             validos.matar();   
             palabras.arrancar();
         }
@@ -72,22 +80,30 @@ public class Controlador implements ActionListener
         {
             String palabra = palabras.getPalabra();
             grilla.addPalabraLista(palabra.toUpperCase());
-            System.out.println("Palabra agregada Correctamente: "+palabra);
             palabras.limpiar();
         }
         else if(e.getActionCommand().equalsIgnoreCase(InterfacePalabras.ACEPTAR)){
             gratis = new VentanaGratis(this.grilla.getFilas(), this.grilla.getCol(), this.grilla);
             gratis.setControlador(this);
             palabras.matar();
+            grilla.imprimirLista();
             gratis.arrancar();
         }
         else if(e.getActionCommand().equalsIgnoreCase(InterfaceGratis.ACEPTAR))
         {
             solucion = new VentanaSolucion();
             solucion.setControlador(this);
-            this.guadarGratis();
-            gratis.matar();
-            solucion.arrancar();
+            try {
+                this.guadarGratis();
+                gratis.matar();
+                this.serializador.crearArchivo();
+                this.serializador.escribirArchivo();
+                //hacer fucking prolog
+                solucion.arrancar();
+            } catch (NoExistePalabraException f) {
+            } catch (ErrorGratisException f) {
+            } catch (ErrorInterseccionException f) {
+            }
         }
         else if(e.getActionCommand().equalsIgnoreCase(InterfaceSolucion.NUEVO))
         {
@@ -117,7 +133,7 @@ public class Controlador implements ActionListener
     }
 
     @SuppressWarnings("oracle.jdeveloper.java.multiple-assignment")
-    private void guadarGratis() {
+    private void guadarGratis() throws NoExistePalabraException, ErrorGratisException {
         int i = 0, j = 0, ultimoI, ultimoJ, inicioI, inicioJ;
         Iterator<JTextField> it = this.gratis.getTextField().iterator();
         JTextField actual = it.next();
@@ -150,15 +166,19 @@ public class Controlador implements ActionListener
                     i++;
                 }
             }
-            if(inicioI == ultimoI){
-                //buscar palabra y correspondiente y guardar el String
-                Palabra encontrada = grilla.buscaPalabra(i, j, "horizontal");
-                encontrada.setPalabra(palabra);
+            String tipo;
+            if(inicioI == ultimoI){                
+                tipo = "horizontal";
             }
             else if(inicioJ == ultimoJ){
-                Palabra encontrada = grilla.buscaPalabra(i, j, "vertical");
-                encontrada.setPalabra(palabra);
+                tipo = "vertical";
             }
+            else {
+                throw new ErrorGratisException();
+            }
+            //buscar palabra y correspondiente y guardar el String
+            Palabra encontrada = grilla.buscaPalabra(inicioI, inicioJ, tipo);
+            encontrada.setPalabra(palabra);
         }
     }
 }

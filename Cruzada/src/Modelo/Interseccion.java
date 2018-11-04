@@ -18,4 +18,8 @@ public class Interseccion {
     {
         return j;
     }
+    
+    public String toString(){
+        return this.i+" "+this.j+"\n";
+    }
 }

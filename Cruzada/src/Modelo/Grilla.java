@@ -69,7 +69,8 @@ public class Grilla
                         fin = j;
                         j++;
                     }
-                    this.addPalabra(new Palabra(inicio, fin, i, "horizontal"));
+                    if(inicio != fin)
+                        this.addPalabra(new Palabra(inicio, fin, i, "horizontal"));
                 }
             }
         }
@@ -84,7 +85,8 @@ public class Grilla
                         fin = i;
                         i++;
                     }
-                    this.addPalabra(new Palabra(inicio, fin, j, "vertical"));
+                    if(inicio != fin)
+                        this.addPalabra(new Palabra(inicio, fin, j, "vertical"));
                 }
             }
         }
@@ -223,9 +225,9 @@ public class Grilla
         return respuesta;
     }
     
-    public Palabra buscaPalabra(int i, int j, String tipo){
+    public Palabra buscaPalabra(int i, int j, String tipo) throws NoExistePalabraException {
         Iterator<Palabra> it = this.palabras.iterator();
-        Palabra palabra, actual;
+        Palabra palabra = null, actual;
         
         while(it.hasNext()){
             actual = it.next();
@@ -233,12 +235,14 @@ public class Grilla
                 palabra = actual;
             }
         }
+        if(palabra == null){
+            throw new NoExistePalabraException();
+        }
         
         return palabra;
     }
     
-    public String armaPrologIntersecciones()
-    {
+    public String armaPrologIntersecciones() throws ErrorInterseccionException {
         Iterator<Interseccion> it = this.intersecciones.iterator();
         Interseccion actual;
         Palabra horizontal, vertical;
@@ -260,10 +264,9 @@ public class Grilla
         return retorno;
     }
     
-    public Palabra buscarHorizontal(Interseccion inter)
-    {
+    public Palabra buscarHorizontal(Interseccion inter) throws ErrorInterseccionException {
         Iterator<Palabra> it = this.palabras.iterator();
-        Palabra actual, retorno;
+        Palabra actual, retorno = null;
         while(it.hasNext() && retorno == null)
         {
             actual = it.next();
@@ -272,13 +275,15 @@ public class Grilla
                 retorno = actual;
             }
         }
+        if(retorno == null){
+            throw new ErrorInterseccionException();
+        }
         return retorno;
     }
     
-    public Palabra buscarVertical(Interseccion inter)
-    {
+    public Palabra buscarVertical(Interseccion inter) throws ErrorInterseccionException {
         Iterator<Palabra> it = this.palabras.iterator();
-        Palabra actual, retorno;
+        Palabra actual, retorno = null;
         while(it.hasNext() && retorno == null)
         {
             actual = it.next();
@@ -286,6 +291,9 @@ public class Grilla
             {
                 retorno = actual;
             }
+        }
+        if(retorno == null){
+            throw new ErrorInterseccionException();
         }
         return retorno;
     }
@@ -329,20 +337,43 @@ public class Grilla
     /*
     primero(palabra([l,e,o,n]),C),
     */
-    public String prologGratis()
-    {
+    public String prologGratis() throws NoHayGratisException {
         String retorno;
         Iterator<Palabra> it = this.palabras.iterator();
-        Palabra actual;
+        Palabra actual = it.next();
         int pos = 1;
         while(it.hasNext() && actual.getPalabra() != null)
         {
             actual = it.next();
             pos++;
         }
+        if(actual.getPalabra().isEmpty()){
+            throw new NoHayGratisException();
+        }
         retorno = "ubicacion"+pos+"(palabra("+this.armarListaString(actual.getPalabra())+"),C),\n";
         
         return retorno;
+    }
+    
+    public void imprimirPalabras(){
+        Iterator<Palabra> it = this.palabras.iterator();
+        while(it.hasNext()){
+            System.out.println(it.next());
+        }
+    }
+    
+    public void imprimirIntersecciones(){
+        Iterator<Interseccion> it = this.intersecciones.iterator();
+        while(it.hasNext()){
+            System.out.println(it.next());
+        }
+    }
+    
+    public void imprimirLista(){
+        Iterator<String> it = this.lista.iterator();
+        while(it.hasNext()){
+            System.out.println(it.next());
+        }
     }
     
 }

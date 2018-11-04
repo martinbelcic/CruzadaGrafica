@@ -3,13 +3,16 @@ package Vista;
 
 import Controlador.Controlador;
 
+import Modelo.Serializador;
+
+//import jpl.Query;
+
 /**
  *
  * @author martin
  */
 public class VentanaSolucion extends javax.swing.JFrame implements InterfaceSolucion
 {
-
     /** Creates new form VentanaSolucion */
     public VentanaSolucion()
     {
@@ -113,6 +116,12 @@ public class VentanaSolucion extends javax.swing.JFrame implements InterfaceSolu
     @Override
     public void arrancar()
     {
+        //this.queryProlog();
         this.setVisible(true);
     }
+    /*
+    private void queryProlog(){
+        Query query = new Query("consult", new Term[] {new Atom(Serializador.ruta)} );
+    }
+*/
 }
