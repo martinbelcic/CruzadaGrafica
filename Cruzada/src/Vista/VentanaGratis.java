@@ -150,6 +150,6 @@ public class VentanaGratis extends javax.swing.JFrame implements InterfaceGratis
     @Override
     public ArrayList<JTextField> getTextField()
     {
-        return this.getTextField();
+        return this.lista;
     }
 }

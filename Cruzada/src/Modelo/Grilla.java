@@ -125,7 +125,7 @@ public class Grilla
         while(it.hasNext())
         {
             Palabra actual = it.next();
-            respuesta += "pos("+i+","+actual.getSize()+")";
+            respuesta += "pos("+i+","+actual.getSize()+").\n";
             i++;
         }
         return respuesta;
@@ -145,9 +145,9 @@ public class Grilla
         {
             respuesta += cabeza;
             respuesta += this.armaCabezaProlog(i, this.lista.size())+"):-\n";
-            respuesta += "X = palabra(Lista),\n";
-            respuesta += "pos("+i+",N),\n";
-            respuesta += "longitud(Lista,N).\n";
+            respuesta += "  X = palabra(Lista),\n";
+            respuesta += "  pos("+i+",N),\n";
+            respuesta += "  longitud(Lista,N).\n";
             
         }
         return respuesta;
@@ -167,9 +167,9 @@ public class Grilla
             String cabeza = "ubicacion"+i+"(X,sol(";
             respuesta += cabeza;
             respuesta += this.armaCabezaProlog(i, this.lista.size())+"):-\n";
-            respuesta += "X = palabra(Lista),\n";
-            respuesta += "pos("+i+",N),\n";
-            respuesta += "longitud(Lista,N).\n";
+            respuesta += "  X = palabra(Lista),\n";
+            respuesta += "  pos("+i+",N),\n";
+            respuesta += "  longitud(Lista,N).\n";
             
         }
         return respuesta;
@@ -205,7 +205,7 @@ public class Grilla
         Iterator<String> it = this.lista.iterator();
         while(it.hasNext()){
             actual = it.next();
-            respuesta += "miembro(palabra(["+this.armarListaString(actual)+"]),C),\n";
+            respuesta += "  miembro(palabra(["+this.armarListaString(actual)+"]),C),\n";
         }
         return respuesta;
     }
@@ -307,10 +307,10 @@ public class Grilla
     private String armaPrologUnaInterseccion(Interseccion actual, Palabra horizontal, Palabra vertical, int cant)
     {
         String retorno;
-        retorno = "ubicacion"+this.posPalabra(horizontal)+"(palabra(X"+cant+"),C),\n";
-        retorno += "ubicacion"+this.posPalabra(vertical)+"(palabra(Y"+cant+"),C),\n";
-        retorno += "posicion(X"+cant+","+(actual.getJ()-horizontal.getInicio())+",Letra"+cant+"),\n";
-        retorno += "posicion(Y"+cant+","+(actual.getI()-vertical.getInicio())+",Letra"+cant+")";
+        retorno = " ubicacion"+this.posPalabra(horizontal)+"(palabra(X"+cant+"),C),\n";
+        retorno += "    ubicacion"+this.posPalabra(vertical)+"(palabra(Y"+cant+"),C),\n";
+        retorno += "    posicion(X"+cant+","+(actual.getJ()-horizontal.getInicio()+1)+",Letra"+cant+"),\n";
+        retorno += "    posicion(Y"+cant+","+(actual.getI()-vertical.getInicio()+1)+",Letra"+cant+")";
         return retorno;
     }
     
@@ -342,7 +342,7 @@ public class Grilla
         Iterator<Palabra> it = this.palabras.iterator();
         Palabra actual = it.next();
         int pos = 1;
-        while(it.hasNext() && actual.getPalabra() != null)
+        while(it.hasNext() && actual.getPalabra().isEmpty())
         {
             actual = it.next();
             pos++;
@@ -350,8 +350,7 @@ public class Grilla
         if(actual.getPalabra().isEmpty()){
             throw new NoHayGratisException();
         }
-        retorno = "ubicacion"+pos+"(palabra("+this.armarListaString(actual.getPalabra())+"),C),\n";
-        
+        retorno = "ubicacion"+pos+"(palabra("+this.armarListaString(actual.getPalabra())+"),C),\n";        
         return retorno;
     }
     

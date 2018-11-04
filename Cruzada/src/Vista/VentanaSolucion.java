@@ -5,7 +5,13 @@ import Controlador.Controlador;
 
 import Modelo.Serializador;
 
-//import jpl.Query;
+import javax.swing.JLabel;
+
+import jpl.Atom;
+import jpl.Query;
+import jpl.Term;
+import jpl.Variable;
+
 
 /**
  *
@@ -116,12 +122,14 @@ public class VentanaSolucion extends javax.swing.JFrame implements InterfaceSolu
     @Override
     public void arrancar()
     {
-        //this.queryProlog();
+        this.queryProlog();
         this.setVisible(true);
     }
-    /*
+    
     private void queryProlog(){
         Query query = new Query("consult", new Term[] {new Atom(Serializador.ruta)} );
+        Variable X = new Variable();
+        Query q2 = new Query ("sol", new Term[]{X});
+        System.out.println(q2.oneSolution().get(X));
     }
-*/
 }

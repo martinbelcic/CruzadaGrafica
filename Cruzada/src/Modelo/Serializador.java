@@ -26,12 +26,18 @@ public class Serializador
     
     public void escribirArchivo() throws ErrorInterseccionException {
         try {
-            FileWriter fw = new FileWriter(this.archivo);
-            fw.write(this.armaEstaticos());
-            fw.write(this.grilla.getPalabrasTamaño());
-            fw.write(this.grilla.getMiembros());
-            fw.write(this.grilla.getPosiciones());
-            fw.write(this.armaSolucion());
+            BufferedWriter bf =new BufferedWriter(new FileWriter(this.archivo));
+            bf.write(this.armaEstaticos());
+            //System.out.println(this.armaEstaticos());
+            bf.write(this.grilla.getPalabrasTamaño());
+            //System.out.println(this.grilla.getPalabrasTamaño());
+            bf.write(this.grilla.getMiembros());
+            //System.out.println(this.grilla.getMiembros());
+            bf.write(this.grilla.getPosiciones());
+            //System.out.println(this.grilla.getPosiciones());
+            bf.write(this.armaSolucion());
+            //System.out.println(this.armaSolucion());
+            bf.close();
         } catch (IOException e) {
         }
     }
@@ -43,9 +49,7 @@ public class Serializador
         "    Lista = [_|Col],\n" + 
         "    longitud(Col,M),\n" + 
         "    N is M+1.\n" + 
-        "\n" + 
         "posicion([Cabeza|_],1,Cabeza).\n" + 
-        "\n" + 
         "posicion([_|Cola],N,X):-\n" + 
         "    N>0,\n" + 
         "    N1 is N-1,\n" + 

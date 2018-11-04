@@ -15,6 +15,7 @@ public class Palabra
         this.ubicacion = ubicacion;
         this.tipo = tipo;
         this.size = fin - inicio + 1;
+        this.palabra = "";
     }
 
     public int getInicio()

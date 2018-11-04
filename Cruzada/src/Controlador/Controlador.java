@@ -95,10 +95,10 @@ public class Controlador implements ActionListener
             solucion.setControlador(this);
             try {
                 this.guadarGratis();
+                grilla.imprimirPalabras();
                 gratis.matar();
                 this.serializador.crearArchivo();
                 this.serializador.escribirArchivo();
-                //hacer fucking prolog
                 solucion.arrancar();
             } catch (NoExistePalabraException f) {
             } catch (ErrorGratisException f) {
@@ -179,6 +179,7 @@ public class Controlador implements ActionListener
             //buscar palabra y correspondiente y guardar el String
             Palabra encontrada = grilla.buscaPalabra(inicioI, inicioJ, tipo);
             encontrada.setPalabra(palabra);
+            System.out.println(encontrada);
         }
     }
 }
