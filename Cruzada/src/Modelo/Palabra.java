@@ -17,6 +17,16 @@ public class Palabra
         this.size = fin - inicio;
     }
 
+    public int getInicio()
+    {
+        return inicio;
+    }
+
+    public int getFin()
+    {
+        return fin;
+    }
+
     public void setPalabra(String palabra)
     {
         this.palabra = palabra;
@@ -44,5 +54,10 @@ public class Palabra
             respuesta = (j == this.ubicacion && i == this.inicio);
         }
         return respuesta;
+    }
+    
+    public boolean isDentro(int valor)
+    {
+        return (this.inicio <= valor) && (valor <= this.fin);
     }
 }

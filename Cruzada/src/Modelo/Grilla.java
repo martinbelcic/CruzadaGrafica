@@ -236,4 +236,113 @@ public class Grilla
         
         return palabra;
     }
+    
+    public String armaPrologIntersecciones()
+    {
+        Iterator<Interseccion> it = this.intersecciones.iterator();
+        Interseccion actual;
+        Palabra horizontal, vertical;
+        String retorno = "";
+        int i = 1;
+        while(it.hasNext())
+        {
+            actual = it.next();
+            horizontal = buscarHorizontal(actual);
+            vertical = buscarVertical(actual);
+            retorno += armaPrologUnaInterseccion(actual, horizontal, vertical, i);
+            if(it.hasNext())
+            {
+                retorno += ",\n";
+            }
+            i++;
+        }
+        retorno += ".";
+        return retorno;
+    }
+    
+    public Palabra buscarHorizontal(Interseccion inter)
+    {
+        Iterator<Palabra> it = this.palabras.iterator();
+        Palabra actual, retorno;
+        while(it.hasNext() && retorno == null)
+        {
+            actual = it.next();
+            if(actual.isTipo("horizontal") && actual.isDentro(inter.getJ()))
+            {
+                retorno = actual;
+            }
+        }
+        return retorno;
+    }
+    
+    public Palabra buscarVertical(Interseccion inter)
+    {
+        Iterator<Palabra> it = this.palabras.iterator();
+        Palabra actual, retorno;
+        while(it.hasNext() && retorno == null)
+        {
+            actual = it.next();
+            if(actual.isTipo("vertical") && actual.isDentro(inter.getI()))
+            {
+                retorno = actual;
+            }
+        }
+        return retorno;
+    }
+    /*
+     * Arma el codigo Prolog de una interseccion
+     * primero(palabra(X1),C),
+       segundo(palabra(Y1),C),
+       posicion(X1,1,Letra1),
+       posicion(Y1,3,Letra1),
+     */
+    private String armaPrologUnaInterseccion(Interseccion actual, Palabra horizontal, Palabra vertical, int cant)
+    {
+        String retorno;
+        retorno = "ubicacion"+this.posPalabra(horizontal)+"(palabra(X"+cant+"),C),\n";
+        retorno += "ubicacion"+this.posPalabra(vertical)+"(palabra(Y"+cant+"),C),\n";
+        retorno += "posicion(X"+cant+","+(actual.getJ()-horizontal.getInicio())+",Letra"+cant+"),\n";
+        retorno += "posicion(Y"+cant+","+(actual.getI()-vertical.getInicio())+",Letra"+cant+")";
+        return retorno;
+    }
+    
+    private int posPalabra(Palabra palabra)
+    {
+        int pos = 1;
+        Iterator<Palabra> it = this.palabras.iterator();
+        Palabra actual;
+        boolean encontre = false;
+        while(it.hasNext() && !encontre && pos < this.palabras.size())
+        {
+            actual = it.next();
+            if(palabra.equals(actual))
+            {
+                encontre = true;
+            }
+            else 
+            {
+                pos++;
+            }
+        }
+        return pos;
+    }
+    /*
+    primero(palabra([l,e,o,n]),C),
+    */
+    public String prologGratis()
+    {
+        String retorno;
+        Iterator<Palabra> it = this.palabras.iterator();
+        Palabra actual;
+        int pos = 1;
+        while(it.hasNext() && actual.getPalabra() != null)
+        {
+            actual = it.next();
+            pos++;
+        }
+        retorno = "ubicacion"+pos+"(palabra("+this.armarListaString(actual.getPalabra())+"),C),\n";
+        
+        return retorno;
+    }
+    
 }

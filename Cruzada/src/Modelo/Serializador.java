@@ -31,8 +31,7 @@ public class Serializador
             fw.write(this.grilla.getPalabrasTamaño());
             fw.write(this.grilla.getMiembros());
             fw.write(this.grilla.getPosiciones());
-            //prolog solucion
-            fw.write();
+            fw.write(this.armaSolucion());
         } catch (IOException e) {
         }
     }
@@ -53,5 +52,14 @@ public class Serializador
         "    posicion(Cola,N1,X1),\n" + 
         "    X=X1.\n";
         return respuesta;
+    }
+
+    private String armaSolucion()
+    {
+        String retorno = "sol(C):-\n";
+        retorno += this.grilla.prologGratis();
+        retorno += this.grilla.getPrologPalabras();
+        retorno += this.grilla.armaPrologIntersecciones();
+        return retorno;
     }
 }
